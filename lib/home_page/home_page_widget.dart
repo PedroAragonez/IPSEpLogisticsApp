@@ -32,7 +32,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    String nombre = 'EPLogistics EL PASO';
+    String nombre = DatabaseProvider.nombre;
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).background,

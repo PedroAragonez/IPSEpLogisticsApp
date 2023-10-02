@@ -78,7 +78,7 @@ class _SalidaDetailsWidgetState extends State<SalidaDetailsWidget> {
     });
   }
   _getPalletID(){
-    DatabaseProvider.getPalletByIdSalida(serialNumberController.value.text).then((value) {
+    DatabaseProvider.getPalletByIdSalidaAndDocument(serialNumberController.value.text,widget.numerodeOrden.orderNum).then((value) {
       print(value.orderNum);
       if(value.orderNum.contains(widget.numerodeOrden.orderNum)){
         setState(() {

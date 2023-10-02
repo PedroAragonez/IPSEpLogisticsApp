@@ -9,7 +9,13 @@ import 'package:i_p_s_mant/models/numOrder.dart';
 
 
 class DatabaseProvider {
-  static const ROOT = "http://192.168.52.168:8070/api/";
+  //ELPASO
+  // static const ROOT = "http://201.174.8.18:8070/api/";
+  static const ROOT = "http://192.168.50.168:8070/api/";
+  static const nombre = 'EPLogistics EL PASO';
+  //JUAREZ
+  // static const ROOT = "http://104.215.117.162:8070/api/";
+  // static const nombre = 'EPLogistics JUAREZ';
   static const ROOTDETALLEENTRADA = ROOT+"detalleEntrada";
   static const ROOTGETENTRADAS = ROOT+"detalleEntrada/getnumorders";
   static const ROOTGETENTRADASPENDIENTES = ROOT+"detalleEntrada/orderspendingbydocument";
@@ -18,11 +24,12 @@ class DatabaseProvider {
   static const ROOTREGISTRALOCATIONSCAN = ROOT+"detalleEntrada/locationsave";
   static const ROOTDETALLESALIDA = ROOT+"detalleSalida";
   static const ROOTGETBYPALLEDIDSALIDA = ROOT+"detalleSalida/bypalletid";
+  static const ROOTGETBYPALLEDIDSALIDADOC = ROOT+"detalleSalida/bypalletidanddocument";
   static const ROOTREGISTRAPALLETSCANSALIDA = ROOT+"detalleSalida/readpalet";
   static const ROOTREGISTRALOCATIONSCANSALIDA = ROOT+"detalleSalida/depuresave";
   static const ROOTGETSALIDAS = ROOT+"detalleSalida/getnumorders";
   static const ROOTGETSALIDASPENDIENTES = ROOT+"detalleSalida/orderspendingbydocument";
-  static String lastVersion = "1.0.6";
+  static String lastVersion = "1.1.0";
 
 
 
@@ -44,7 +51,9 @@ class DatabaseProvider {
   }
 //obtener usuario mediante email y password
   static Future<List<numEntry>> getPalletsPendientes( ) async {
+    print(ROOTGETENTRADAS);
     var response = await http.get(Uri.parse(ROOTGETENTRADAS));
+    print(ROOTGETENTRADAS);
     if (response.statusCode == 200) {
       print(response.body);
       List<numEntry> list = parseDetalleEvento(response.body);
@@ -108,6 +117,17 @@ class DatabaseProvider {
   static Future<detalleSalida> getPalletByIdSalida(String palletId) async {
     print(ROOTGETBYPALLEDIDSALIDA+"?palletid=${palletId}");
     var response = await http.get(Uri.parse(ROOTGETBYPALLEDIDSALIDA+"?palletid=${palletId}"));
+    if (response.statusCode == 200) {
+      detalleSalida list = detalleSalida.fromJson(json.decode(response.body));
+
+      return list;
+    } else {
+      throw <detalleSalida>[];
+    }
+  }//obtener usuario mediante email y password
+  static Future<detalleSalida> getPalletByIdSalidaAndDocument(String palletId, String document) async {
+    print(ROOTGETBYPALLEDIDSALIDA+"?palletid=${palletId}");
+    var response = await http.get(Uri.parse(ROOTGETBYPALLEDIDSALIDA+"?palletid=${palletId}&document=${document}"));
     if (response.statusCode == 200) {
       detalleSalida list = detalleSalida.fromJson(json.decode(response.body));
 
